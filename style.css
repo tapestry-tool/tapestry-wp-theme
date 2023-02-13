@@ -1,0 +1,65 @@
+/*
+ Theme Name:   Tapestry Minimal
+ Description:  Twenty Nineteen Child Theme
+ Author:       Tapestry Team, University of British Coloumbia
+ Author URI:   http://www.tapestry-tool.com
+ Template:     twentynineteen
+ Version:      1.0.1
+ License:      GNU General Public License v3 or later
+ License URI:  http://www.gnu.org/licenses/gpl-3.0.html
+ Text Domain:  tapestry
+*/
+
+.site-logo .custom-logo-link {
+  border-radius: 0 !important;
+}
+@media only screen and (min-width: 768px) {
+  .site-logo {
+    margin-top: -32px;
+  }
+}
+
+body.postid-3932 .node .metaWrapper p {
+    text-shadow: 0px 0px 2px #000;
+    font-weight: bold;
+}
+body.postid-3932 #node-4827:not(:hover) .imageOverlay {
+    fill: #072d42;
+    opacity: 1;
+}
+body.postid-3932 #node-4827 .metaWrapper p {
+    text-shadow: none;
+    font-size: 1.2em;
+    font-weight: bold;
+	color: #f09083;
+}
+body.postid-3932 #node-4827:hover .metaWrapper {
+    display: none;
+}
+
+.site-content {
+	overflow: visible;	
+}
+
+body.single-tapestry .modal-container .content .buttons-container {
+    z-index: 100;
+}
+
+@media only screen and (min-width: 768px) {
+	nav#site-navigation {
+		float: right;
+	}
+}
+
+/* Fix some issues with the display of content on the page after user activates their account */
+div#signup-content .wp-activate-container {
+  max-width: calc(100% - (2 * 1rem));
+  margin: 0 1rem;
+}
+@media only screen and (min-width: 768px) {
+  div#signup-content .wp-activate-container {
+    max-width: 80%;
+    margin: 0 10%;
+    padding: 0 60px;
+  }
+}

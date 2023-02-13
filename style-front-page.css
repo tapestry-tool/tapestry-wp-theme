@@ -1,0 +1,174 @@
+
+/* General */
+small {
+    color: #888;
+    font-weight: normal;
+}
+
+/* Entry Header */
+.entry .entry-header {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: solid 1px #ccc;
+}
+.entry .entry-header h2 {
+    flex: auto;
+    font-weight: bold;
+    padding-bottom: 0.5em;
+}
+.entry .entry-header h2:before {
+    background: #767676;
+    content: "\020" !important;
+    display: block;
+    height: 2px;
+    margin: 1rem 0;
+    width: 1em;
+}
+.entry .entry-header:first-child {
+    margin-top: 0;
+}
+.entry .entry-header:nth-child(2) {
+    font-size: 1.7em;
+}
+.entry .entry-header button,
+.entry .entry-header .button {
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+}
+.entry .entry-header:nth-child(2) button,
+.entry .entry-header:nth-child(2) .button {
+    font-size: 1.7em;
+    margin-top: 1em;
+}
+
+/* Tapestries List */
+#tapestries-list {
+    max-width: 100%;
+    float: left;
+}
+#tapestries-list .clear {
+    float: left;
+    min-width: 100%;
+    margin: 0 !important;
+}
+
+/* Tapestries List Item */
+#tapestries-list > div {
+    width: 31%;
+    float: left;
+    margin: 0 3.5% 3.5% 0;
+    background: #f6f6f6;
+    padding: 1em;
+    border-radius: 5px;
+    border: solid 1px #ddd;
+    box-shadow: 1px 1px 3px #0000001f;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    line-height: 1;
+    min-height: 300px;
+    padding-top: 170px;
+    position: relative;
+    overflow: hidden;
+}
+#tapestries-list > div:nth-of-type(3n) {
+    margin-right: 0;
+}
+#tapestries-list > span+div:nth-last-child(1):nth-child(2) {
+    width: 100%;
+    max-width: 400px;
+}
+@media (min-width: 768px) {
+    .entry #tapestries-list {
+        margin: calc(3 * 1rem) calc(10% + 60px) 1rem;
+        float: none;
+        padding: 0;
+    }
+}
+@media (max-width: 782px) {
+    #tapestries-list > div {
+        width: 48%;
+        margin-right: 4%;
+    }
+    #tapestries-list > div:nth-of-type(3n) {
+        margin-right: 4%;
+    }
+    #tapestries-list > div:nth-of-type(2n) {
+        margin-right: 0;
+    }
+}
+@media (max-width: 550px) {
+    #tapestries-list > div {
+        width: 100%;
+        margin-right: 0;
+    }
+    #tapestries-list > div:nth-of-type(3n),
+    #tapestries-list > div:nth-of-type(2n) {
+        margin-right: 0;
+    }
+}
+
+/* Tapestries List Item Content */
+#tapestries-list > div .thumbnail-container {
+    position: absolute;
+    width: 100%;
+    height: 150px;
+    top: 0;
+    left: 0;
+}
+#tapestries-list > div span {
+    position: absolute;
+    width: 100%;
+    height: 150px;
+    top: 0;
+    left: 0;
+    background: #e6e6e6;
+    background-size: cover;
+    background-position: center;
+}
+#tapestries-list div > a {
+    text-decoration: none;
+    padding-bottom: 1em;
+    float: left;
+    width: 100%;
+}
+#tapestries-list div .meta {
+    float: left;
+    min-width: 100%;
+    position: relative;
+    margin-top: 14px;
+}
+#tapestries-list div .meta .label {
+    text-transform: uppercase;
+    font-size: 0.6em;
+    background: #666;
+    color: #fff;
+    padding: 6px 9px;
+    border-radius: 15px;
+    float: left;
+    font-family: sans-serif;
+}
+#tapestries-list div .meta .delete-btn {
+    transition: all 0.4s;
+    width: auto !important;
+    font-size: 0;
+    float: right !important;
+    color: #666;
+    padding: 0 !important;
+}
+#tapestries-list div .meta .delete-btn:hover {
+    line-height: 1.9;
+    font-size: 0.75em;
+    background: red;
+    border-radius: 5px;
+    padding: 0 8px !important;
+    color: #fff;
+}
+#tapestries-list div .meta .delete-btn::before {
+    content: "\f182";
+    top: 0;
+    position: relative;
+    float: left;
+    font: normal 20px/1 dashicons;
+    speak: none;
+    padding: 4px 0;
+}
