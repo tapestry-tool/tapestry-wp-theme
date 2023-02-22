@@ -20,9 +20,9 @@
 		<div class="site-info">
 			<?php $blog_info = get_bloginfo( 'name' ); ?>
 			<?php if ( ! empty( $blog_info ) ) : ?>
-				<a class="site-name" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>,
+				<a class="site-name" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>.
 			<?php endif; ?>
-			<span>Made possible by fundings from the <a href="https://tlef.ubc.ca/" target="_blank">UBC TLEF</a>, financed by UBC Vancouver students.</span>
+			<span>Tapestry Tool was developed with funding from Microsoft and the <a href="https://tlef.ubc.ca/" target="_blank">UBC TLEF</a>.</span>
 			<?php
 			if ( function_exists( 'the_privacy_policy_link' ) ) {
 				the_privacy_policy_link( '', '<span role="separator" aria-hidden="true"></span>' );
