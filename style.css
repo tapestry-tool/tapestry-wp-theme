@@ -51,6 +51,14 @@ body.single-tapestry .modal-container .content .buttons-container {
 	}
 }
 
+body.single-tapestry footer.site-footer .site-info {
+  margin: 20px max(20px, 10vw) !important;
+}
+
+body.single-tapestry header.site-header {
+  padding: 28px 0 !important;
+}
+
 /* Fix some issues with the display of content on the page after user activates their account */
 div#signup-content .wp-activate-container {
   max-width: calc(100% - (2 * 1rem));
