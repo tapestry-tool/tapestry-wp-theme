@@ -10,13 +10,31 @@ function tapestry_theme_enqueue_styles() {
     );
 }
 
+/* Add message above login form to let users know their password was reset */
+function tapestry_add_login_message() {
+	return $_GET['action']==='lostpassword' ? '' : '<p class="message warning">Please note: Your password may have been reset to protect your security. If your password doesn\'t work, please click <a href="https://sites.tapestry-tool.com/wp-login.php?action=lostpassword">Lost your password</a> to reset your password.</p>';
+}
+add_filter('login_message', 'tapestry_add_login_message');
+
+// customize favicon
+
+function tapestry_favicon() { ?> 
+<link rel="shortcut icon" href="<?php bloginfo('stylesheet_directory'); ?>/favicon.png" /> <?php 
+} 
+add_action('admin_head', 'tapestry_favicon');
+add_action('wp_head', 'tapestry_favicon');
+
+// Disable emojis to improve loading time
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
 // Save password cookie required to register as a new user
-$allow_reg_pwd = "TLEF2020";
-$allow_reg_cookie = 'ubc_allow_reg_cookie_is_set_a_ok';
 function save_allow_reg_cookie() {
-        if ( isset($_POST['allow_registration_pwd']) && $_POST['allow_registration_pwd'] == $allow_reg_pwd ) {
-                setcookie('allow_registration_pwd', $allow_reg_cookie);
-        }
+    $allow_reg_pwd = "TLEF2020";
+    $allow_reg_cookie = 'ubc_allow_reg_cookie_is_set_a_ok';
+    if ( isset($_POST['allow_registration_pwd']) && $_POST['allow_registration_pwd'] == $allow_reg_pwd ) {
+        setcookie('allow_registration_pwd', $allow_reg_cookie);
+    }
 }
 add_action( 'init', 'save_allow_reg_cookie' );
 
@@ -237,3 +255,83 @@ $(document).ready(function(){
 	}
 echo '</div>';
 }
+
+
+/*
+ * Add ability for non-superadmins to also be able to skip confirmation email
+ */
+add_action( "user_new_form", "tapestry_custom_user_profile_fields" );
+function tapestry_custom_user_profile_fields($user){
+    if (!is_super_admin( $user_id ) && current_user_can('manage_options')) {
+?>
+    <table class="form-table">
+      <tr>
+        <th scope="row"><?php _e('Skip Confirmation Email') ?></th>
+        <td><input type="checkbox" name="noconfirmation" value="1" <?php checked( $_POST['noconfirmation'], 1 ); ?> /> Add the user without sending an email that requires their confirmation. .</td>
+      </tr>
+    </table>
+<?php
+    }
+}
+add_filter('wpmu_signup_user_notification', 'tapestry_auto_activate_users', 10, 4);
+function tapestry_auto_activate_users($user, $user_email, $key, $meta){
+
+    if(!current_user_can('manage_options'))
+        return false;
+
+    if (!empty($_POST['noconfirmation']) && $_POST['noconfirmation'] == 1) {
+        wpmu_activate_signup($key);
+        return false;
+    } 
+}
+
+
+function mc_admin_users_caps( $caps, $cap, $user_id, $args ){
+ 
+    foreach( $caps as $key => $capability ){
+ 
+        if( $capability != 'do_not_allow' )
+            continue;
+ 
+        switch( $cap ) {
+            case 'edit_user':
+            case 'edit_users':
+                $caps[$key] = 'edit_users';
+                break;
+            case 'delete_user':
+            case 'delete_users':
+                $caps[$key] = 'delete_users';
+                break;
+            case 'create_users':
+                $caps[$key] = $cap;
+                break;
+        }
+    }
+ 
+    return $caps;
+}
+add_filter( 'map_meta_cap', 'mc_admin_users_caps', 1, 4 );
+remove_all_filters( 'enable_edit_any_user_configuration' );
+add_filter( 'enable_edit_any_user_configuration', '__return_true');
+ 
+/**
+ * Checks that both the editing user and the user being edited are
+ * members of the blog and prevents the super admin being edited.
+ */
+function mc_edit_permission_check() {
+    global $profileuser;
+ 
+    $screen = get_current_screen();
+ 
+    $current_user = wp_get_current_user();
+ 
+    if( ! is_super_admin( $current_user->ID ) && in_array( $screen->base, array( 'user-edit', 'user-edit-network' ) ) ) { // editing a user profile
+        if ( is_super_admin( $profileuser->ID ) ) { // trying to edit a superadmin while less than a superadmin
+            wp_die( __( 'You do not have permission to edit this user.' ) );
+        } elseif ( ! ( is_user_member_of_blog( $profileuser->ID, get_current_blog_id() ) && is_user_member_of_blog( $current_user->ID, get_current_blog_id() ) )) { // editing user and edited user aren't members of the same blog
+            wp_die( __( 'You do not have permission to edit this user.' ) );
+        }
+    }
+ 
+}
+add_filter( 'admin_head', 'mc_edit_permission_check', 1, 4 );

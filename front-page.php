@@ -40,7 +40,7 @@ get_header(); ?>
                             $output .= '<div>';
 
                             $tapestry_data = get_post_meta($tapestry->ID, 'tapestry', true);
-                            if ($tapestry_data->rootId) {
+                            if (!empty($tapestry_data) && $tapestry_data->rootId) {
                                 $nodeMetadata = get_metadata_by_mid('post', $tapestry_data->rootId);
                                 $nodeData = get_post_meta($nodeMetadata->meta_value->post_id, 'tapestry_node_data', true);
                                 $imageURL = $nodeData->imageURL;
@@ -68,8 +68,8 @@ get_header(); ?>
             ?>
             <div class="entry-header">
                 <h2 class="entry-title">Tapestries <small>(<?php echo $count; ?>)</small></h2>
-                <?php if (current_user_can('edit_posts')) echo do_shortcode( '[new_tapestry_button]' ); ?>
-                <?php if (!is_user_logged_in()) echo '<a class="button" href="'.get_site_url(null, 'wp-login.php?redirect_to='.urlencode(get_site_url())).'">Login</a>'; ?>
+                <?php echo do_shortcode( '[new_tapestry_button]' ); ?>
+                <?php if (!current_user_can('edit_posts')) echo '<a class="button" href="'.get_site_url(null, 'wp-login.php?redirect_to='.urlencode(get_site_url())).'">Login</a>'; ?>
             </div>
             <div class="entry-content" id="tapestries-list">
                 <?php if (count($tapestries)) echo $output; else echo '<p>No tapestries found. You may need to log in first if you are not already logged in.</p>'; ?>

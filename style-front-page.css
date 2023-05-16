@@ -6,17 +6,16 @@ small {
 }
 
 /* Entry Header */
-.entry .entry-header {
+.entry-header {
     display: flex;
     align-items: flex-start;
     border-bottom: solid 1px #ccc;
 }
-.entry .entry-header h2 {
+.entry-header h2 {
     flex: auto;
     font-weight: bold;
-    padding-bottom: 0.5em;
 }
-.entry .entry-header h2:before {
+.entry-header h2:before {
     background: #767676;
     content: "\020" !important;
     display: block;
@@ -24,19 +23,19 @@ small {
     margin: 1rem 0;
     width: 1em;
 }
-.entry .entry-header:first-child {
+.entry-header:first-child {
     margin-top: 0;
 }
-.entry .entry-header:nth-child(2) {
+.entry-header:nth-child(2) {
     font-size: 1.7em;
 }
-.entry .entry-header button,
-.entry .entry-header .button {
+.entry-header button,
+.entry-header .button {
     margin-top: 2.5em;
     margin-bottom: 1em;
 }
-.entry .entry-header:nth-child(2) button,
-.entry .entry-header:nth-child(2) .button {
+.entry-header:nth-child(2) button,
+.entry-header:nth-child(2) .button {
     font-size: 1.7em;
     margin-top: 1em;
 }
